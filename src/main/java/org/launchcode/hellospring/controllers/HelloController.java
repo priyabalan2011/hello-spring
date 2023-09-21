@@ -23,8 +23,12 @@ public class HelloController {
 
     //handle requests of the form http://localhost:8080/hello?name=LaunchCode
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public String helloWithQueryParam(@RequestParam String name){
-        return "Hello, " + name + "!";
+    public String helloWithQueryParam(@RequestParam String name,@RequestParam String language){
+        //return "Hello, " + name + "!";
+        if (name == null) {
+            name = "World";
+        }
+        return "<h3 style='color:blue'>" + createMessage(name, language) + "</h3>";
     }
 
     //handle requests of the form http://localhost:8080/hello/LaunchCode
@@ -40,10 +44,38 @@ public class HelloController {
                 "<body>" +
                 "<form action = '/hello' method = 'post'>" + // submit a request to /hello
                 "<input type = 'text' name = 'name' >" +
+                "<select name='language'>" +
+                    "<option value='english'>English</option>"+
+                    "<option value='spanish'>Spanish</option>"+
+                    "<option value='german'>German</option>"+
+                    "<option value='french'>French</option>"+
+                    "<option value='italian'>Italian</option>"+
+                "</select>" +
                 "<input type = 'submit' value = 'Greet Me!' >" +
                 "</form>" +
                 "</body>" +
                 "</html>";
+    }
+    public static String createMessage(String n, String l) {
+        String greeting = "";
+
+        if (l.equals("english")) {
+            greeting = "Hello";
+        }
+        else if (l.equals("french")) {
+            greeting = "Bonjour";
+        }
+        else if (l.equals("italian")) {
+            greeting = "Bonjourno";
+        }
+        else if (l.equals("spanish")) {
+            greeting = "Hola";
+        }
+        else if (l.equals("german")) {
+            greeting = "Hallo";
+        }
+
+        return greeting + " " + n;
     }
 
 }
